@@ -53,23 +53,34 @@ class WordController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Word $word)
     {
-        //
+        return view('words.edit', compact('word'));//
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Word $word)
     {
-        //
+        $validated = $request->validate([
+            'italian' => 'required|string|max:255',
+            'japanese' => 'required|string|max:255',
+            'gender' => 'nullable|string|max:50',
+            'meaning' => 'nullable|string|max:255',
+        ]);
+
+        $word->update($validated);
+
+        return redirect()
+            ->route('words.index')
+            ->with('success', '単語を更新しました');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(word $word)
+    public function destroy(Word $word)
     {
         $word->delete();
 
