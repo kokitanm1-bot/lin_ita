@@ -15,6 +15,7 @@
       <th>Japanese</th>
       <th>Gender</th>
       <th>Meaning</th>
+      <th class="text-end">操作</th>
     </tr>
   </thead>
   <tbody>
@@ -25,10 +26,29 @@
         <td>{{ $word->japanese }}</td>
         <td>{{ $word->gender }}</td>
         <td>{{ $word->meaning }}</td>
+
+        {{-- ここ追加 --}}
+        <td class="text-end">
+          <a class="btn btn-sm btn-outline-secondary"
+             href="{{ route('words.edit', $word) }}">
+             編集
+          </a>
+
+          <form action="{{ route('words.destroy', $word) }}"
+                method="POST"
+                class="d-inline"
+                onsubmit="return confirm('削除しますか？')">
+            @csrf
+            @method('DELETE')
+            <button class="btn btn-sm btn-outline-danger">
+              削除
+            </button>
+          </form>
+        </td>
       </tr>
     @empty
       <tr>
-        <td colspan="5" class="text-center text-muted py-4">
+        <td colspan="6" class="text-center text-muted py-4">
           まだ単語がありません。
         </td>
       </tr>

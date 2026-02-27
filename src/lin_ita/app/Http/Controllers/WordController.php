@@ -69,8 +69,12 @@ class WordController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(word $word)
     {
-        //
+        $word->delete();
+
+        return redirect()
+            ->route('words.index')
+            ->with('success', '単語を削除しました');//
     }
 }
