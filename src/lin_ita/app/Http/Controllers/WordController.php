@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Word;
 
 class WordController extends Controller
 {
@@ -11,7 +12,8 @@ class WordController extends Controller
      */
     public function index()
     {
-        //
+        $words = Word::orderByDesc('id')->paginate(20);
+        return view('words.index', compact('words'));
     }
 
     /**
@@ -19,7 +21,7 @@ class WordController extends Controller
      */
     public function create()
     {
-        //
+        return view('words.create');//
     }
 
     /**
@@ -27,7 +29,17 @@ class WordController extends Controller
      */
     public function store(Request $request)
     {
-        //
+            $validated = $request->validate([
+        'italian' => 'required|string|max:255',
+        'japanese' => 'required|string|max:255',
+        'gender' => 'nullable|string|max:50',
+        'meaning' => 'nullable|string|max:255',
+    ]);
+
+    Word::create($validated);
+
+    return redirect()->route('words.index')
+                     ->with('success', '単語を登録しました');//
     }
 
     /**
