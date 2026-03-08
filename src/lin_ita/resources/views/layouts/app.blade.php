@@ -12,6 +12,7 @@
     <a class="navbar-brand" href="{{ route('words.index') }}">Italian Vocab</a>
     <div class="navbar-nav">
       <a class="nav-link" href="{{ route('words.index') }}">単語一覧</a>
+      <a class="nav-link" href="{{ route('quiz.index') }}">クイズ</a>
     </div>
   </div>
 </nav>
